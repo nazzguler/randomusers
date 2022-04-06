@@ -1,11 +1,11 @@
 package com.example.randomusers.network
 
 import com.example.randomusers.model.RandomUsersResponse
-import io.reactivex.Single
+import retrofit2.Response
 
 class RandomUsersRepository(private val randomUsersApi: RandomUsersApi) {
 
-    fun getRandomUsersByResults(page: Int): Single<RandomUsersResponse> {
+    suspend fun getRandomUsersByResults(page: Int): Response<RandomUsersResponse> {
         return randomUsersApi.getRandomUsers(page)
     }
 }
