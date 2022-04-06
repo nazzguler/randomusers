@@ -6,13 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".view.UsersListActivity">
 
-    <Spinner
-        android:id="@+id/spinner"
+    <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintTop_toTopOf="@+id/usersRecyclerView" />
 
     <androidx.recyclerview.widget.RecyclerView

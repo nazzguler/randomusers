@@ -27,9 +27,9 @@ class RandomUsersAdapter(private val users: List<User>) : RecyclerView.Adapter<R
 
     override fun onBindViewHolder(holder: RandomUsersViewHolder, position: Int) {
         val randomUser = users[position]
-        val firstName = randomUser.name?.first?.run { "" }
-        val lastName = randomUser.name?.last?.run { "" }
-        val email = randomUser.email?.run { "" }
+        val firstName = randomUser.name?.first ?: ""
+        val lastName = randomUser.name?.last ?: ""
+        val email = randomUser.email
         val fullName = StringBuilder().append(firstName).append(" ").append(lastName).toString()
         val userPicture = randomUser.picture
 
