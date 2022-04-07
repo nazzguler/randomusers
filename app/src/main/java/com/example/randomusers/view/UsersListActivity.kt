@@ -9,29 +9,25 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.randomusers.R
-import com.example.randomusers.RandomUsersApplication
-import com.example.randomusers.di.AppContainer
-import com.example.randomusers.di.RandomUsersContainer
 import com.example.randomusers.model.RandomUsersResponse
 import com.example.randomusers.viewmodel.RandomUsersViewModel
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 class UsersListActivity : AppCompatActivity(), RandomUsersView {
 
-    private var viewModel: RandomUsersViewModel? = null
+    @Inject
+    lateinit var viewModel: RandomUsersViewModel
     private lateinit var progressBar: ProgressBar
     private val tag = UsersListActivity::class.java.simpleName
-    lateinit var appContainer: AppContainer
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        appContainer = (application as RandomUsersApplication).appContainer
-        appContainer.randomUsersContainer = RandomUsersContainer(appContainer.randomUsersRepository)
         setContentView(R.layout.activity_user_list)
         progressBar = findViewById(R.id.progressBar)
-
-        viewModel = appContainer.randomUsersContainer?.viewModelFactory?.create()
-        viewModel?.randomUsersView = this
-        viewModel?.getRandomUsers(30)
+        viewModel.randomUsersView = this
+        viewModel.getRandomUsers(30)
     }
 
     override fun onLoading() {
@@ -50,10 +46,5 @@ class UsersListActivity : AppCompatActivity(), RandomUsersView {
             recyclerView.adapter = RandomUsersAdapter(userList)
             recyclerView.layoutManager = LinearLayoutManager(this)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        appContainer.randomUsersContainer = null
     }
 }
