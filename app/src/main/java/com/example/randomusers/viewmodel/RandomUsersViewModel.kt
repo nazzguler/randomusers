@@ -6,20 +6,20 @@ import com.example.randomusers.utils.Coroutines
 import com.example.randomusers.view.RandomUsersView
 
 class RandomUsersViewModel(
-    private val randomUsersView: RandomUsersView,
     private val randomUsersRepository: RandomUsersRepository
 ) : ViewModel() {
+    var randomUsersView: RandomUsersView? = null
 
     fun getRandomUsers(results: Int) {
-        randomUsersView.onLoading()
+        randomUsersView?.onLoading()
         Coroutines.main {
             val response = randomUsersRepository.getRandomUsersByResults(results)
             if (response.isSuccessful) {
                 response.body()?.let { r ->
-                    randomUsersView.onSuccess(r)
+                    randomUsersView?.onSuccess(r)
                 }
             } else {
-                randomUsersView.onFailure(response.code().toString())
+                randomUsersView?.onFailure(response.code().toString())
             }
         }
     }
