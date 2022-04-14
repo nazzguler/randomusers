@@ -5,24 +5,23 @@ import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ProgressBar
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.randomusers.R
 import com.example.randomusers.model.RandomUsersResponse
 import com.example.randomusers.viewmodel.RandomUsersViewModel
-import dagger.android.AndroidInjection
-import javax.inject.Inject
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UsersListActivity : AppCompatActivity(), RandomUsersView {
 
-    @Inject
-    lateinit var viewModel: RandomUsersViewModel
+    private val viewModel: RandomUsersViewModel by viewModels()
     private lateinit var progressBar: ProgressBar
     private val tag = UsersListActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_list)
         progressBar = findViewById(R.id.progressBar)

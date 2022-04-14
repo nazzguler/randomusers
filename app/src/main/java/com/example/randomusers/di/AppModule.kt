@@ -5,15 +5,17 @@ import com.example.randomusers.network.RandomUsersApi
 import com.example.randomusers.network.RetrofitManager
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
 
 @Module
-class AppModule(
-    private val context: Context
-) {
-    @Singleton
+@InstallIn(SingletonComponent::class)
+object AppModule {
+
+    /** Context is not being used, is just a demo on how we should get it when needed**/
     @Provides
-    fun provideRandomUsersApi(): RandomUsersApi {
+    fun provideRandomUsersApi(@ApplicationContext context: Context): RandomUsersApi {
         return RetrofitManager.getRetrofitClient().create(RandomUsersApi::class.java)
     }
 }

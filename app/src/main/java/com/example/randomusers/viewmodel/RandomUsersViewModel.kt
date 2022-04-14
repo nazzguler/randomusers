@@ -4,8 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.example.randomusers.network.RandomUsersRepository
 import com.example.randomusers.utils.Coroutines
 import com.example.randomusers.view.RandomUsersView
+import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+@HiltViewModel
 class RandomUsersViewModel @Inject constructor(
     private val randomUsersRepository: RandomUsersRepository
 ) : ViewModel() {
