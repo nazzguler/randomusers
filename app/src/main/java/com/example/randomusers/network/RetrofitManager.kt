@@ -1,7 +1,6 @@
 package com.example.randomusers.network
 
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
@@ -14,7 +13,6 @@ class RetrofitManager @Inject constructor() {
             return Retrofit.Builder()
                 .baseUrl(randomUsersApi)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
         }
     }
