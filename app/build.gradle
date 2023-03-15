@@ -3,13 +3,26 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
 android {
-    compileSdk 32
+    compileSdk 33
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
 
     defaultConfig {
         applicationId "com.example.randomusers"
-        minSdk 21
-        targetSdk 32
+        minSdk 26
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -19,32 +32,70 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+
+    buildFeatures {
+        compose = true
+        viewBinding = true
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.3.2"
     }
 }
 
 dependencies {
+    def ktxVersion = '1.6.0'
+    def appCompatVersion = '1.3.1'
+    def activityComposeVersion = '1.4.0'
+    def composeVersion = '1.3.0'
+    def constraintLayoutComposeVersion = '1.0.1'
+    def coilVersion = '1.4.0'
+    def junitVersion = '1.1.5'
+    def koinVersion = "3.1.5"
+    def espressoVersion = '3.5.1'
+    def accompanistVersion = '0.21.1-beta'
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation 'com.squareup.picasso:picasso:2.71828'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.google.code.gson:gson:2.9.0'
-    implementation 'com.google.dagger:dagger:2.41'
+
+    implementation "androidx.core:core-ktx:$ktxVersion"
+    implementation "androidx.constraintlayout:constraintlayout-compose:$constraintLayoutComposeVersion"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.compose.foundation:foundation:$composeVersion"
+    implementation "androidx.compose.ui:ui:$composeVersion"
+    implementation "androidx.compose.ui:ui-tooling:$composeVersion"
+    implementation "androidx.compose.ui:ui-tooling-preview:$composeVersion"
+    implementation "androidx.compose.foundation:foundation:$composeVersion"
+    implementation "androidx.compose.material:material:$composeVersion"
+    implementation "androidx.activity:activity-ktx:$activityComposeVersion"
+    implementation "androidx.activity:activity-compose:$activityComposeVersion"
+
+    // 3rd party
+    implementation "io.coil-kt:coil-compose:$coilVersion"
+    implementation "com.google.accompanist:accompanist-swiperefresh:$accompanistVersion"
+    implementation "com.google.accompanist:accompanist-permissions:$accompanistVersion"
+    implementation "com.google.accompanist:accompanist-pager:$accompanistVersion"
+    implementation "com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion"
+    implementation "com.google.accompanist:accompanist-placeholder-material:$accompanistVersion"
+
+    // Koin
+    implementation "io.insert-koin:koin-android:$koinVersion"
+    implementation "io.insert-koin:koin-androidx-navigation:$koinVersion"
+    implementation "io.insert-koin:koin-androidx-compose:$koinVersion"
+    implementation "io.insert-koin:koin-test:$koinVersion"
+
+    // Test
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation "androidx.test.ext:junit:$junitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoVersion"
+
+    implementation 'com.google.android.material:material:1.5.0'
+
+    implementation(project(":network"))
+}
+
+kapt {
+    correctErrorTypes = true
 }

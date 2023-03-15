@@ -1,0 +1,41 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.plugin.serialization' version "1.7.20"
+}
+
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+
+android {
+    namespace 'com.example.network'
+    compileSdk 33
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    def kotlinVersion = "1.7.20"
+    def ktorVersion = "1.6.4"
+    def junitVersion = '4.13.2'
+    // Ktor
+    implementation "io.ktor:ktor-client-serialization:$ktorVersion"
+    implementation "io.ktor:ktor-client-core:$ktorVersion"
+    implementation "io.ktor:ktor-client-android:$ktorVersion"
+    implementation "io.ktor:ktor-client-mock:$ktorVersion"
+    implementation "io.ktor:ktor-client-logging:$ktorVersion"
+    implementation "org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion"
+
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2'
+    // Test
+    testImplementation "junit:junit:$junitVersion"
+}
